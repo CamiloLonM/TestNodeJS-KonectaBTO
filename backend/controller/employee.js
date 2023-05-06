@@ -6,29 +6,36 @@ import {
 
 export const getEmployeesController = async (req, res, next) => {
   try {
-    const employees = getEmployeesService();
+    const employees = await getEmployeesService();
 
-    return res.sendStatus(200);
+    return res.status(200).json(employees);
   } catch (error) {
     next(error);
   }
 };
 
-export const getEmployeeByNameController = (req, res, next) => {
+export const getEmployeeByNameController = async (req, res, next) => {
   try {
-    const employee = getEmployeeByNameService();
+    const { name } = req.params;
 
-    return res.sendStatus(200);
+    const employee = await getEmployeeByNameService(name);
+
+    if (!employee) {
+      return res.sendStatus(204);
+    }
+
+    return res.status(200).json(employee);
   } catch (error) {
     next(error);
   }
 };
 
-export const createEmployeeController = (req, res, next) => {
+export const createEmployeeController = async (req, res, next) => {
   try {
-    const employee = createEmployeeService();
+    const { body } = req;
+    const employee = await createEmployeeService(body);
 
-    return res.sendStatus(201);
+    return res.status(201).json(employee);
   } catch (error) {
     next(error);
   }

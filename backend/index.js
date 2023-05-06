@@ -1,6 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import xss from 'xss-clean';
 import cors from 'cors';
+
 import config from './config/index.js';
 
 import employeesRoutes from './routes/employee.js';
@@ -13,6 +15,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
+app.use(xss());
 
 app.use('/employees', employeesRoutes);
 app.use('/requests', requestsRoutes);
