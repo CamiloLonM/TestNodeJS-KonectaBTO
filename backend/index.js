@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import xss from 'xss-clean';
 import cors from 'cors';
+import morgan from 'morgan';
 
 import config from './config/index.js';
 
@@ -19,6 +20,7 @@ app.use(xss());
 
 app.use('/employees', employeesRoutes);
 app.use('/requests', requestsRoutes);
+app.use(morgan('combined'));
 
 Database.getInstance().connect();
 

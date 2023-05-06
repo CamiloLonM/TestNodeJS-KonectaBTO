@@ -3,6 +3,7 @@ import {
   createEmployeeRepository,
   getEmployeeByNameRepository,
   getEmployeesRepository,
+  getEmployeesSelectRepository,
 } from '../repository/employee.js';
 
 export const getEmployeesService = async () => {
@@ -11,6 +12,12 @@ export const getEmployeesService = async () => {
   employees.forEach((employee) => {
     employee.admission_date = formatDate(employee.admission_date);
   });
+
+  return employees;
+};
+
+export const getEmployeesSelectService = async () => {
+  const employees = await getEmployeesSelectRepository();
 
   return employees;
 };

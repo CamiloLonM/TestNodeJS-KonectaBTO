@@ -2,11 +2,22 @@ import {
   createEmployeeService,
   getEmployeeByNameService,
   getEmployeesService,
+  getEmployeesSelectService,
 } from '../service/employee.js';
 
 export const getEmployeesController = async (req, res, next) => {
   try {
     const employees = await getEmployeesService();
+
+    return res.status(200).json(employees);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getEmployeesSelectController = async (req, res, next) => {
+  try {
+    const employees = await getEmployeesSelectService();
 
     return res.status(200).json(employees);
   } catch (error) {

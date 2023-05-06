@@ -9,6 +9,13 @@ export const getEmployeesRepository = async () => {
   return rows;
 };
 
+export const getEmployeesSelectRepository = async () => {
+  const query = 'SELECT id, name FROM employees';
+  const { rows } = await instance.executeQuery(query);
+
+  return rows;
+};
+
 export const getEmployeeByIdRepository = async (id) => {
   const query = 'SELECT * FROM employees WHERE id = $1';
   const { rows } = await instance.executeQuery(query, [id]);
@@ -17,8 +24,8 @@ export const getEmployeeByIdRepository = async (id) => {
 };
 
 export const getEmployeeByNameRepository = async (name) => {
-  const query = 'SELECT * FROM employees WHERE name = $1';
-  const { rows } = await instance.executeQuery(query, [name]);
+  const query = "SELECT * FROM employees WHERE name LIKE '" + name + "%'";
+  const { rows } = await instance.executeQuery(query);
 
   return rows;
 };
