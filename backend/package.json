@@ -1,0 +1,36 @@
+{
+  "name": "challenge-konectabto",
+  "version": "1.0.0",
+  "description": "This is the api for the konectaBTO's challenge",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CamiloLonM/challenge-konectaBTO.git"
+  },
+  "keywords": [
+    "apirest-nodejs-sql"
+  ],
+  "author": "Camilo Londoño",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CamiloLonM/challenge-konectaBTO/issues"
+  },
+  "homepage": "https://github.com/CamiloLonM/challenge-konectaBTO#readme",
+  "type": "module",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.21.5",
+    "@babel/core": "^7.21.8",
+    "@babel/preset-env": "^7.21.5",
+    "nodemon": "^2.0.22"
+  }
+}
