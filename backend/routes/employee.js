@@ -4,12 +4,13 @@ import {
   getEmployeeByNameController,
   createEmployeeController,
 } from '../controller/employee.js';
+import { validateBody, validateNameUrl } from '../middleware/employee.js';
 
 const routes = Router();
 
 routes
   .get('', getEmployeesController)
-  .get('/:name', getEmployeeByNameController)
-  .post('', createEmployeeController);
+  .get('/:name', validateNameUrl, getEmployeeByNameController)
+  .post('', validateBody, createEmployeeController);
 
 export default routes;

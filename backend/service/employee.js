@@ -9,7 +9,7 @@ export const getEmployeesService = async () => {
   const employees = await getEmployeesRepository();
 
   employees.forEach((employee) => {
-    employee.fecha_ingreso = formatDate(employee.fecha_ingreso);
+    employee.admission_date = formatDate(employee.admission_date);
   });
 
   return employees;
@@ -20,7 +20,7 @@ export const getEmployeeByNameService = async (name) => {
 
   if (employees) {
     employees.forEach((employee) => {
-      employee.fecha_ingreso = formatDate(employee.fecha_ingreso);
+      employee.admission_date = formatDate(employee.admission_date);
     });
   }
 

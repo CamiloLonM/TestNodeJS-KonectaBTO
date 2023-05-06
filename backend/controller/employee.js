@@ -33,6 +33,7 @@ export const getEmployeeByNameController = async (req, res, next) => {
 export const createEmployeeController = async (req, res, next) => {
   try {
     const { body } = req;
+
     const employee = await createEmployeeService(body);
 
     return res.status(201).json(employee);
