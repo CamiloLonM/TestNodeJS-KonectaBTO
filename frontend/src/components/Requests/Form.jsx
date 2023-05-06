@@ -1,28 +1,44 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from '../../utils/axios';
 import { useNavigate } from 'react-router-dom';
 
 const Form = () => {
   const navigate = useNavigate();
-  const [name, setName] = useState('');
-  const [admissionDate, setAdmissionDate] = useState('');
-  const [salary, setSalary] = useState('');
+
+  const [code, setCode] = useState('');
+  const [description, setDescription] = useState('');
+  const [summary, setSummary] = useState('');
+  const [employee, setEmployee] = useState('');
+
+  const [employees, setEmployees] = useState([]);
+
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    async function getData() {
+      const { data } = await axios.get('/employees/select');
+      setEmployees([...data]);
+    }
+
+    getData();
+  }, []);
 
   const handleSubmitForm = async (e) => {
     setLoading(true);
     e.preventDefault();
-    await axios.post('/employees', {
-      name,
-      admission_date: admissionDate,
-      salary,
+    await axios.post('/requests', {
+      code,
+      description,
+      summary,
+      employee_id: employee,
     });
+
     setMessage(
-      'Employee added successfully, you will be redirected back to the grid.'
+      'Request added successfully, you will be redirected back to the grid.'
     );
     setTimeout(() => {
-      navigate('/employees');
+      navigate('/requests');
     }, 2500);
   };
 
@@ -34,50 +50,64 @@ const Form = () => {
       >
         <div className='mb-4'>
           <label className='block text-gray-700 text-sm font-bold mb-2'>
-            Name
+            Code
           </label>
           <input
             className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
             type='text'
-            name='name'
-            placeholder='Name'
-            onChange={(e) => setName(e.target.value)}
+            name='code'
+            placeholder='Code'
+            onChange={(e) => setCode(e.target.value)}
           />
         </div>
         <div className='mb-4'>
           <label className='block text-gray-700 text-sm font-bold mb-2'>
-            Admission Date
+            Description
           </label>
-          <input
-            className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-            type='date'
-            name='admission_date'
-            placeholder='dd/mm/yyyy'
-            onChange={(e) => setAdmissionDate(e.target.value)}
-          />
-        </div>
-        <div className='mb-6'>
-          <label className='block text-gray-700 text-sm font-bold mb-2'>
-            Salary
-          </label>
-          <input
+          <textarea
             className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
             type='text'
-            name='salary'
-            placeholder='Salary'
-            onChange={(e) => setSalary(e.target.value)}
+            name='description'
+            placeholder='Description'
+            maxLength='50'
+            onChange={(e) => setDescription(e.target.value)}
           />
-          {salary && isNaN(salary) && (
-            <p className='text-red-500 text-sm italic pt-1'>
-              Salary must be a number
-            </p>
-          )}
         </div>
-        <div className='flex items-center justify-between mb-5'>
+        <div className='mb-4'>
+          <label className='block text-gray-700 text-sm font-bold mb-2'>
+            Summary
+          </label>
+          <textarea
+            className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+            type='text'
+            name='summary'
+            maxLength='50'
+            placeholder='Summary'
+            onChange={(e) => setSummary(e.target.value)}
+          />
+        </div>
+        <div className='mb-4'>
+          <label className='block text-gray-700 text-sm font-bold mb-2'>
+            Employee
+          </label>
+          <select
+            className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+            defaultValue={employee}
+            onChange={(e) => setEmployee(e.target.value)}
+          >
+            <option value=''>Select an Employee</option>
+            {employees.map((employee, index) => (
+              <option key={index} value={employee.id}>
+                {employee.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className='flex items-center justify-between mb-4'>
           <button
             className='bg-green-500 hover:bg-green-700 disabled:bg-green-300 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full'
             type='submit'
-            disabled={!name || !admissionDate || !salary || isNaN(salary)}
+            disabled={!code || !employee}
           >
             <div className='flex items-center justify-center'>
               {loading && (
@@ -107,7 +137,7 @@ const Form = () => {
         <div className='text-right'>
           <a
             className='cursor-pointer text-blue-700 font-bold text-sm'
-            onClick={() => navigate('/employees')}
+            onClick={() => navigate('/requests')}
           >
             Back
           </a>

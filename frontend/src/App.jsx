@@ -7,6 +7,10 @@ const EmployeesFormComponent = lazy(() =>
   import('./components/Employees/Form')
 );
 const RequestsComponent = lazy(() => import('./components/Requests/Grid'));
+const RequestsFormComponent = lazy(() => import('./components/Requests/Form'));
+const RequestsDeleteComponent = lazy(() =>
+  import('./components/Requests/Delete')
+);
 
 function App() {
   return (
@@ -21,6 +25,14 @@ function App() {
               element={<EmployeesFormComponent />}
             />
             <Route path='/requests' element={<RequestsComponent />} />
+            <Route
+              path='/requests/create'
+              element={<RequestsFormComponent />}
+            />
+            <Route
+              path='/requests/delete/:id'
+              element={<RequestsDeleteComponent />}
+            />
           </Routes>
         </HashRouter>
       </Suspense>
