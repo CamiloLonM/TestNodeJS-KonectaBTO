@@ -3,6 +3,9 @@ import { HashRouter, Routes, Route } from 'react-router-dom';
 
 const HomeComponent = lazy(() => import('./components/Home'));
 const EmployeesComponent = lazy(() => import('./components/Employees/Grid'));
+const EmployeesFormComponent = lazy(() =>
+  import('./components/Employees/Form')
+);
 const RequestsComponent = lazy(() => import('./components/Requests/Grid'));
 
 function App() {
@@ -13,6 +16,10 @@ function App() {
           <Routes>
             <Route path='' element={<HomeComponent />} />
             <Route path='/employees' element={<EmployeesComponent />} />
+            <Route
+              path='/employees/create'
+              element={<EmployeesFormComponent />}
+            />
             <Route path='/requests' element={<RequestsComponent />} />
           </Routes>
         </HashRouter>
