@@ -4,31 +4,33 @@ import {
   deleteRequestByIdService,
 } from '../service/request.js';
 
-export const getRequestsController = (req, res, next) => {
+export const getRequestsController = async (req, res, next) => {
   try {
-    const employees = getRequestsService();
+    const requests = await getRequestsService();
 
-    return res.sendStatus(200);
+    return res.status(200).json(requests);
   } catch (error) {
     next(error);
   }
 };
 
-export const createRequestController = (req, res, next) => {
+export const createRequestController = async (req, res, next) => {
   try {
-    const employee = createRequestService();
+    const { body } = req;
+    const employee = await createRequestService(body);
 
-    return res.sendStatus(200);
+    return res.status(201).json(employee);
   } catch (error) {
     next(error);
   }
 };
 
-export const deleteRequestByIdController = (req, res, next) => {
+export const deleteRequestByIdController = async (req, res, next) => {
   try {
-    const employee = deleteRequestByIdService();
+    const { id } = req.params;
+    await deleteRequestByIdService(id);
 
-    return res.sendStatus(201);
+    return res.sendStatus(200);
   } catch (error) {
     next(error);
   }
