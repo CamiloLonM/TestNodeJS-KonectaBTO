@@ -8,8 +8,8 @@ import {
 const routes = Router();
 
 routes
-  .get('/', getEmployeesController)
+  .get('', getEmployeesController)
   .get('/:name', getEmployeeByNameController)
-  .post('/', createEmployeeController);
+  .post('', createEmployeeController);
 
 export default routes;
