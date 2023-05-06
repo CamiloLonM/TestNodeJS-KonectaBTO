@@ -9,6 +9,13 @@ export const getEmployeesRepository = async () => {
   return rows;
 };
 
+export const getEmployeeByIdRepository = async (id) => {
+  const query = 'SELECT * FROM employees WHERE id = $1';
+  const { rows } = await instance.executeQuery(query, [id]);
+
+  return rows[0];
+};
+
 export const getEmployeeByNameRepository = async (name) => {
   const query = 'SELECT * FROM employees WHERE name = $1';
   const { rows } = await instance.executeQuery(query, [name]);

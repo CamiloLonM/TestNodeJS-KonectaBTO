@@ -4,6 +4,7 @@ import {
   deleteRequestByIdRepository,
   getRequestByIdRepository,
 } from '../repository/request.js';
+import { getEmployeeByIdRepository } from '../repository/employee.js';
 
 export const getRequestsService = async () => {
   const requests = await getRequestsRepository();
@@ -12,6 +13,13 @@ export const getRequestsService = async () => {
 };
 
 export const createRequestService = async (data) => {
+  const employee = await getEmployeeByIdRepository(data.employee_id);
+
+  if (!employee) {
+    // Check error handling to return JSON and not throw error.
+    throw new Error(`There's no employee with id ${data.employee_id}`);
+  }
+
   const request = await createRequestRepository(data);
 
   return request;
